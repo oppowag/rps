@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock Paper Scissors</title>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<div class = "buttons">		
+		<div class = "button" id="rockButton">
+			<span>Rock</span>
+		</div>
+
+		<div class = "button" id="paperButton">
+			<span>Paper</span>
+		</div>
+
+		<div class = "button" id="scissorsButton">
+			<span>Scissors</span>
+		</div>
+	</div>
+
+	<div class = "results">
+		<span id = "status" style = "font-weight: bold;">&nbsp;</span>
+		<p>You: <span id="player">0</span> | PC: <span id="pc">0</span></p>
+	</div>
+
+  <script>
+  	// Randomly select PC's turn
+    function computerPlay(){
+        var rpsPC
+        var rpsPCNum = Math.floor(Math.random() * 3)
+        
+        if(rpsPCNum == 0){
+            rpsPC = 'Rock'
+        }
+
+        else if(rpsPCNum == 1){
+            rpsPC = 'Scissors'
+        }
+
+        else{
+            rpsPC = 'Paper'
+        }
+        
+        return rpsPC
+    }
+    
+    // Determine who wins the round and if there should be another round played
+    function playRound(playerSelection){
+        
+        if (scorePC >= 5 || scorePlayer >= 5){
+        	return;
+        } 
+
+    	var computerSelection = computerPlay();
+        document.getElementById("status").innerHTML = "&nbsp;";
+
+        if(playerSelection.toUpperCase() == computerSelection.toUpperCase()){
+            document.getElementById("status").innerHTML = "Tied!";
+            return;
+        }
+
+        else if(computerSelection == 'Rock'){
+            if(playerSelection.toUpperCase() == 'PAPER'){
+                scorePlayer++;
+                document.getElementById("player").innerHTML = scorePlayer;
+            }
+
+            else{
+                scorePC++;
+                document.getElementById("pc").innerHTML = scorePC;
+            }
+        }
+
+        else if(computerSelection == 'Paper'){
+            if(playerSelection.toUpperCase() == 'ROCK'){
+                scorePC++;
+                document.getElementById("pc").innerHTML = scorePC;
+            }
+
+            else{
+                scorePlayer++;
+                document.getElementById("player").innerHTML = scorePlayer;
+            }
+        }
+
+        else{
+            if(playerSelection.toUpperCase() == 'PAPER'){
+                scorePC++;
+                document.getElementById("pc").innerHTML = scorePC;
+            }
+            
+            else{
+                scorePlayer++;
+                document.getElementById("player").innerHTML = scorePlayer;
+            }
+        }
+
+        if (scorePC == 5){
+        	document.getElementById("status").innerHTML = "You lost the game!";
+        }
+
+        if (scorePlayer == 5){
+        	document.getElementById("status").innerHTML = "You won the game!";
+        }
+
+        return;
+    }
+
+    var scorePlayer = 0;
+    var scorePC = 0;
+
+	document.getElementById("rockButton").addEventListener("click", playRound.bind(this, "Rock"));
+	document.getElementById("paperButton").addEventListener("click", playRound.bind(this, "Paper"));
+	document.getElementById("scissorsButton").addEventListener("click", playRound.bind(this, "Scissors"));
+
+  </script>
+</body>
+</html>
